@@ -33,7 +33,7 @@ class FoundItemReportActivity : AppCompatActivity() {
 
         setupForm()
         setupToggles()
-        setupErrorClearing()
+        setupValidation()
     }
 
     private fun setupForm() {
@@ -55,7 +55,8 @@ class FoundItemReportActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupErrorClearing() {
+    private fun setupValidation() {
+        // Error clearing on typing
         val watcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -83,7 +84,7 @@ class FoundItemReportActivity : AppCompatActivity() {
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
         val dpd = DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
-            val formattedDate = String.format(Locale.getDefault(), "%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay)
+            val formattedDate = String.format(Locale.US, "%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay)
             binding.etDate.setText(formattedDate)
         }, year, month, day)
         
@@ -103,12 +104,12 @@ class FoundItemReportActivity : AppCompatActivity() {
         var isValid = true
 
         if (itemName.length < 3) {
-            binding.tilItemName.error = "Item name must be at least 3 characters"
+            binding.tilItemName.error = "Minimum 3 characters required"
             isValid = false
         }
 
         if (description.length < 5) {
-            binding.tilDescription.error = "Please provide more detail"
+            binding.tilDescription.error = "Please provide more details"
             isValid = false
         }
 
@@ -123,17 +124,17 @@ class FoundItemReportActivity : AppCompatActivity() {
         }
 
         if (handInLocation.isEmpty()) {
-            binding.tilHandInLocation.error = "Storage/Hand-in location is required"
+            binding.tilHandInLocation.error = "Storage location is required"
             isValid = false
         }
 
         if (contactInfo.isEmpty()) {
-            binding.tilContactInfo.error = "Contact or office ref is required"
+            binding.tilContactInfo.error = "Reporter or office ref is required"
             isValid = false
         }
 
         if (!isValid) {
-            Toast.makeText(this, "Please check all fields", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Please fill all required fields", Toast.LENGTH_SHORT).show()
             return
         }
 

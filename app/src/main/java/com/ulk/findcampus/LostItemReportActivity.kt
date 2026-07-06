@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextWatcher
 import android.util.Patterns
 import android.widget.ArrayAdapter
@@ -33,7 +34,7 @@ class LostItemReportActivity : AppCompatActivity() {
 
         setupForm()
         setupToggles()
-        setupErrorClearing()
+        setupValidation()
     }
 
     private fun setupForm() {
@@ -55,7 +56,19 @@ class LostItemReportActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupErrorClearing() {
+    private fun setupValidation() {
+        // Strict Input Filter for Name (Only letters and spaces)
+        val nameFilter = InputFilter { source, start, end, _, _, _ ->
+            for (i in start until end) {
+                if (!source[i].isLetter() && !source[i].isWhitespace()) {
+                    return@InputFilter ""
+                }
+            }
+            null
+        }
+        binding.etContactName.filters = arrayOf(nameFilter)
+
+        // Error clearing on typing
         val watcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -83,7 +96,7 @@ class LostItemReportActivity : AppCompatActivity() {
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
         val dpd = DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
-            val formattedDate = String.format(Locale.getDefault(), "%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay)
+            val formattedDate = String.format(Locale.US, "%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay)
             binding.etDate.setText(formattedDate)
         }, year, month, day)
         
@@ -103,12 +116,12 @@ class LostItemReportActivity : AppCompatActivity() {
         var isValid = true
 
         if (itemName.length < 3) {
-            binding.tilItemName.error = "Item name must be at least 3 characters"
+            binding.tilItemName.error = "Minimum 3 characters required"
             isValid = false
         }
 
         if (description.length < 5) {
-            binding.tilDescription.error = "Please provide more detail (min 5 chars)"
+            binding.tilDescription.error = "Please provide more details (min 5 characters)"
             isValid = false
         }
 
@@ -128,15 +141,20 @@ class LostItemReportActivity : AppCompatActivity() {
         }
 
         if (contactInfo.isEmpty()) {
-            binding.tilContactInfo.error = "Email or phone is required"
+            binding.tilContactInfo.error = "Contact email or phone is required"
             isValid = false
-        } else if (!isValidContact(contactInfo)) {
-            binding.tilContactInfo.error = "Please enter a valid phone or email"
-            isValid = false
+        } else {
+            val isEmail = Patterns.EMAIL_ADDRESS.matcher(contactInfo).matches()
+            val isPhone = contactInfo.all { it.isDigit() || it == '+' || it == ' ' } && contactInfo.length >= 8
+            
+            if (!isEmail && !isPhone) {
+                binding.tilContactInfo.error = "Enter a valid email or phone number"
+                isValid = false
+            }
         }
 
         if (!isValid) {
-            Toast.makeText(this, "Please check all fields", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Please fill all required fields correctly", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -156,11 +174,5 @@ class LostItemReportActivity : AppCompatActivity() {
             Toast.makeText(this@LostItemReportActivity, "Lost item report saved", Toast.LENGTH_SHORT).show()
             finish()
         }
-    }
-
-    private fun isValidContact(info: String): Boolean {
-        return Patterns.EMAIL_ADDRESS.matcher(info).matches() || 
-               Patterns.PHONE.matcher(info).matches() || 
-               info.length >= 8
     }
 }

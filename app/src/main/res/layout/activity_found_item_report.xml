@@ -121,6 +121,8 @@
                         android:id="@+id/etItemName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="textCapWords"
+                        android:maxLength="50"
                         android:hint="e.g. Silver AirPods case" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -155,6 +157,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Where it was picked up, condition"
+                        android:inputType="textMultiLine"
+                        android:maxLength="500"
                         android:minLines="3"
                         android:gravity="top" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -175,6 +179,7 @@
                         android:id="@+id/etLocation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="textCapSentences"
                         android:hint="e.g. Student Union, Rm 108" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -215,6 +220,7 @@
                         android:id="@+id/etHandInLocation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="textCapSentences"
                         android:hint="e.g. Student Union, Rm 108" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -234,7 +240,8 @@
                         android:id="@+id/etContactInfo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="you@campus.edu" />
+                        android:inputType="text"
+                        android:hint="you@campus.edu or 078..." />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.button.MaterialButton
