@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Backgrounds -->
+    <color name="deep_forest_green">#1B2E24</color>
+    <color name="cream_surface">#F4EFE6</color>
+    <color name="cream_input">#EBE5D9</color>
+
+    <!-- Accent Colors -->
+    <color name="lost_red">#B73E2E</color>
+    <color name="found_teal">#2E5A44</color>
+    <color name="accent_gold">#D4B483</color>
+
+    <!-- Text Colors -->
+    <color name="text_on_dark">#F4EFE6</color>
+    <color name="text_on_light">#1B2E24</color>
+    <color name="text_muted">#7A7166</color>
+
+    <!-- Legacy/Standard Names for compatibility -->
+    <color name="primary">@color/deep_forest_green</color>
+    <color name="primary_dark">#122018</color>
+    <color name="accent">@color/accent_gold</color>
+    <color name="background">@color/cream_surface</color>
+    <color name="white">#FFFFFF</color>
+    <color name="divider">#D9D0C1</color>
+
+    <color name="status_open">#5D737E</color>
+    <color name="status_claimed">#B73E2E</color>
+    <color name="status_returned">#2E5A44</color>
+    <color name="status_resolved">#454B48</color>
+
+    <!-- Row Colors -->
+    <color name="row_lost">#B73E2E</color>
+    <color name="row_found">#2E5A44</color>
+</resources>
