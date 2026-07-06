@@ -3,6 +3,9 @@ package com.ulk.findcampus
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Patterns
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -30,6 +33,7 @@ class FoundItemReportActivity : AppCompatActivity() {
 
         setupForm()
         setupToggles()
+        setupErrorClearing()
     }
 
     private fun setupForm() {
@@ -51,16 +55,40 @@ class FoundItemReportActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupErrorClearing() {
+        val watcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                binding.tilItemName.error = null
+                binding.tilDescription.error = null
+                binding.tilLocation.error = null
+                binding.tilDate.error = null
+                binding.tilHandInLocation.error = null
+                binding.tilContactInfo.error = null
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        }
+        binding.etItemName.addTextChangedListener(watcher)
+        binding.etDescription.addTextChangedListener(watcher)
+        binding.etLocation.addTextChangedListener(watcher)
+        binding.etDate.addTextChangedListener(watcher)
+        binding.etHandInLocation.addTextChangedListener(watcher)
+        binding.etContactInfo.addTextChangedListener(watcher)
+    }
+
     private fun showDatePicker() {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-        DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
+        val dpd = DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
             val formattedDate = String.format(Locale.getDefault(), "%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay)
             binding.etDate.setText(formattedDate)
-        }, year, month, day).show()
+        }, year, month, day)
+        
+        dpd.datePicker.maxDate = System.currentTimeMillis()
+        dpd.show()
     }
 
     private fun saveReport() {
@@ -72,8 +100,40 @@ class FoundItemReportActivity : AppCompatActivity() {
         val handInLocation = binding.etHandInLocation.text.toString().trim()
         val contactInfo = binding.etContactInfo.text.toString().trim()
 
-        if (itemName.isEmpty() || location.isEmpty() || handInLocation.isEmpty()) {
-            Toast.makeText(this, "Please fill required fields", Toast.LENGTH_SHORT).show()
+        var isValid = true
+
+        if (itemName.length < 3) {
+            binding.tilItemName.error = "Item name must be at least 3 characters"
+            isValid = false
+        }
+
+        if (description.length < 5) {
+            binding.tilDescription.error = "Please provide more detail"
+            isValid = false
+        }
+
+        if (location.isEmpty()) {
+            binding.tilLocation.error = "Found location is required"
+            isValid = false
+        }
+
+        if (date.isEmpty()) {
+            binding.tilDate.error = "Please select the date"
+            isValid = false
+        }
+
+        if (handInLocation.isEmpty()) {
+            binding.tilHandInLocation.error = "Storage/Hand-in location is required"
+            isValid = false
+        }
+
+        if (contactInfo.isEmpty()) {
+            binding.tilContactInfo.error = "Contact or office ref is required"
+            isValid = false
+        }
+
+        if (!isValid) {
+            Toast.makeText(this, "Please check all fields", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -83,15 +143,15 @@ class FoundItemReportActivity : AppCompatActivity() {
             reportType = ItemReport.TYPE_FOUND,
             description = description,
             location = location,
-            date = date.ifEmpty { "Not specified" },
+            date = date,
             contactName = "",
-            contactInfo = contactInfo.ifEmpty { "Refer to office" },
+            contactInfo = contactInfo,
             handInLocation = handInLocation
         )
 
         lifecycleScope.launch {
             repository.insert(report)
-            Toast.makeText(this@FoundItemReportActivity, "Saved successfully", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@FoundItemReportActivity, "Found item report saved", Toast.LENGTH_SHORT).show()
             finish()
         }
     }

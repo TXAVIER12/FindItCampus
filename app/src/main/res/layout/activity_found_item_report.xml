@@ -141,9 +141,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="DESCRIPTION"
+                    android:text="DESCRIPTION *"
                     style="@style/SectionLabelManifest" />
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilDescription"
                     style="@style/ManifestInputStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -161,7 +162,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="WHERE IT&apos;S BEING HELD *"
+                    android:text="FOUND LOCATION *"
                     style="@style/SectionLabelManifest" />
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilLocation"
@@ -180,9 +181,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="DATE FOUND"
+                    android:text="DATE FOUND *"
                     style="@style/SectionLabelManifest" />
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilDate"
                     style="@style/ManifestInputStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -192,7 +194,7 @@
                         android:id="@+id/etDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="2026-07-02"
+                        android:hint="YYYY-MM-DD"
                         android:focusable="false"
                         android:clickable="true" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -219,7 +221,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="CONTACT PHONE OR EMAIL *"
+                    android:text="REPORTER CONTACT / OFFICE REF *"
                     style="@style/SectionLabelManifest" />
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilContactInfo"
