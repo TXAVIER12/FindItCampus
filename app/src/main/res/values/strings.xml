@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FindIt Campus</string>
+    <string name="tagline">Campus Lost &amp; Found Reporting Service</string>
+
+    <string name="dashboard_description">Report a lost or found item, browse current listings, and connect with the campus Lost &amp; Found office — all in one place.</string>
+
+    <string name="office_name">Campus Lost &amp; Found Office</string>
+    <string name="office_location">Student Services Building, Ground Floor, Room G-12</string>
+    <string name="office_hours">Monday – Friday: 8:00 AM – 5:00 PM\nSaturday: 9:00 AM – 1:00 PM\nSunday: Closed</string>
+    <string name="office_contact">+250 788 000 000  ·  lostandfound@ulk.ac.rw</string>
+    <string name="office_instructions">To collect a found item, please bring a valid student ID or national ID card. Items unclaimed after 30 days may be donated or disposed of according to institutional policy.</string>
+</resources>
