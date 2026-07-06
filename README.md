@@ -18,15 +18,10 @@ information — all stored locally on the device.
 
 ## Main Features
 
-- **Dashboard** — live counts of lost vs. found reports, quick-access buttons
-  to every feature.
-- **Report a Lost Item** — captures name, category, description, last-seen
-  location, date, and contact details, with required-field validation.
-- **Report a Found Item** — captures name, category, description, found
-  location, date, and where it was handed in/stored, with required-field
-  validation.
-- **All Reports** — searchable, filterable (All / Lost / Found) list of every
-  report with status shown at a glance.
+- **Vintage Manifest UI** — custom-themed design with a "academic ledger" feel, featuring ticket-style list items and consistent professional branding.
+- **Full Input Validation** — robust error handling on all forms with real-time feedback and logical constraints (e.g., no future dates).
+- **Dashboard** — live counts of lost vs. found reports, quick-access buttons to every feature.
+- **Search & Advanced Filtering** — keyword search combined with Lost/Found and Category-specific filtering for rapid item location.
 - **Item Detail** — full report details, one-tap status updates (Claimed /
   Returned / Resolved), and delete with confirmation.
 - **Lost & Found Office Info** — office location, opening hours, contact, and
